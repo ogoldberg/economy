@@ -13,6 +13,7 @@ gem 'figaro'
 gem 'pg'
 gem 'simple_form', '>= 3.0.0.rc'
 gem 'slim'
+gem 'slim-rails'
 gem 'unicorn'
 group :development do
   gem 'better_errors'
@@ -28,6 +29,7 @@ group :development do
   gem 'rb-fchange', :require=>false
   gem 'rb-fsevent', :require=>false
   gem 'rb-inotify', :require=>false
+  gem 'thin'
 end
 group :development, :test do
   gem 'factory_girl_rails'
