@@ -1,4 +1,9 @@
 h3 Home
-- @users.each do |user|
-  p
-    | User: #{link_to user.name, user}
+
+-if current_user.present?
+  = current_user.name
+  h4 Your history
+  - @transactions.each do |transaction|
+    p #{(transaction.giver == current_user) ? "you" : transaction.giver.name} gave 
+       #{(transaction.recipient == current_user) ? "you" : transaction.recipient.name} #{transaction.points.count} points 
+       #{time_ago_in_words(transaction.created_at)} ago.

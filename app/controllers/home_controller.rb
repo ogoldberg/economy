@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
   def index
-    @users = User.all
+    @transactions = (current_user.sent_transactions + current_user.received_transactions).sort_by(&:created_at)
   end
 end
