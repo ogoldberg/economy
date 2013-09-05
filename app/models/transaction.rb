@@ -1,5 +1,7 @@
 class Transaction < ActiveRecord::Base
-  has_many :users
-  has_many :rewards
-  accepts_nested_attributes_for :rewards
+  include ActiveModel::Serialization
+  belongs_to :giver, class_name: "User"
+  belongs_to :recipient, class_name: "User"
+
+  serialize :points
 end

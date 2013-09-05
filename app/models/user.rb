@@ -5,18 +5,20 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :transactions
-  has_many :rewards, through: :transactions
-  has_many :points, through: :rewards
-  has_many :receivers, through: :rewards
-  has_many :givers, through: :rewards
+  has_many :sent_transactions, class_name: "Transaction", foreign_key: "giver_id"
+  has_many :received_transactions, class_name: "Transaction", foreign_key: "recipient_id"
 
   after_create do
-    t = Transaction.new
-    t.save!
+    point_initializer
+  end
+
+  def point_initializer    
+    transaction = Transaction.new({recipient: self, giver: User.find_by_email("welcome@morekarma.com"), points: []})
     100.times do
-      r = Reward.new({receiver: self, giver: User.find_by_email("welcome@morekarma.com"), point: Point.new, transaction_id: t.id})
-      r.save!
+      point = Point.new
+      point.save
+      transaction.points << point
     end
+    transaction.save!
   end
 end

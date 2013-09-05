@@ -1,4 +1,4 @@
 class Point < ActiveRecord::Base
-  has_many :rewards
-  has_many :users, through: :rewards
+  has_and_belongs_to_many :transactions
+  has_many :users, through: :transactions
 end
